@@ -27,8 +27,9 @@ def get_caps(as_dict: bool = False):
 async def home():
     return {
         "endpoints": {
-            "/nodes": "Implemented nodes by Monty.",
-            "/check": "Check any code to see whether code is monty compatible.",
+            "docs": "Swagger UI API Docs"
+            "nodes": "Implemented nodes by Monty.",
+            "check": "Check any code to see whether code is monty compatible.",
         },
         "cache_ttl": 12 * 60 * 60,
     }
