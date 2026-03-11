@@ -23,6 +23,17 @@ def get_caps(as_dict: bool = False):
     return caps
 
 
+@app.get("/")
+async def home():
+    return {
+        "endpoints": {
+            "/nodes": "Implemented nodes by Monty.",
+            "/check": "Check any code to see whether code is monty compatible.",
+        },
+        "cache_ttl": 12 * 60 * 60,
+    }
+
+
 @app.get("/nodes")
 async def fetch_nodes() -> dict[str, Any]:
     """
@@ -43,4 +54,4 @@ async def check_compat(
     else:
         response.status_code = 505
 
-    return {"status_code": response.status_code,  "reasons": reasons}
+    return {"status_code": response.status_code, "reasons": reasons}
