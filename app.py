@@ -2,8 +2,13 @@ from cachetools import cached, TTLCache
 from typing import Any
 
 from monty_compat import get_capabilities, MontyCapabilities as Capabilities
-from fastapi import Body, Depends, FastAPI, Response
+from fastapi import Depends, FastAPI, Response
 from asgi_request_duration.middleware import RequestDurationMiddleware, TimeGranularity
+
+from pydantic import BaseModel
+
+class Code(BaseModel):
+    code: str
 
 app = FastAPI()
 
@@ -45,13 +50,13 @@ async def fetch_nodes() -> dict[str, Any]:
     return get_caps_as_dict()
 
 
-@app.get("/check")
+@app.post("/check")
 async def check_compat(
     response: Response,
-    code: str = Body(),
+    code: Code,
     caps: Capabilities = Depends(get_caps, scope="function"),
 ) -> dict[str, int | list[str]]:
-    ok, reasons = caps.check_code(code)
+    ok, reasons = caps.check_code(code.code)
     if ok:
         response.status_code = 200
     else:
