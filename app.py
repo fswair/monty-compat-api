@@ -45,7 +45,7 @@ async def fetch_nodes() -> dict[str, Any]:
     return get_caps_as_dict()
 
 
-@app.post("/check")
+@app.get("/check")
 async def check_compat(
     response: Response,
     code: str = Body(),
