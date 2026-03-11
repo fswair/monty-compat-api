@@ -16,11 +16,13 @@ app.add_middleware(
 
 
 @cached(cache=TTLCache(maxsize=256, ttl=12 * 60 * 60))
-def get_caps(as_dict: bool = False):
-    caps = get_capabilities(cache="off")
-    if as_dict:
-        return caps.to_dict()
-    return caps
+def get_caps():
+    return get_capabilities(cache="off")
+
+
+@cached(cache=TTLCache(maxsize=256, ttl=12 * 60 * 60))
+def get_caps_as_dict():
+    return get_caps().to_dict()
 
 
 @app.get("/")
@@ -40,7 +42,7 @@ async def fetch_nodes() -> dict[str, Any]:
     """
     Fetch detailed information for Python nodes supported by Monty runtime.
     """
-    return get_caps(as_dict=True)
+    return get_caps_as_dict()
 
 
 @app.get("/check")
