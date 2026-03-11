@@ -2,7 +2,7 @@ from cachetools import cached, TTLCache
 from typing import Any
 
 from monty_compat import get_capabilities, MontyCapabilities as Capabilities
-from fastapi import Depends, FastAPI, Response
+from fastapi import Body, Depends, FastAPI, Response
 from asgi_request_duration.middleware import RequestDurationMiddleware, TimeGranularity
 
 app = FastAPI()
@@ -45,10 +45,10 @@ async def fetch_nodes() -> dict[str, Any]:
     return get_caps_as_dict()
 
 
-@app.post("/check")
+@app.get("/check")
 async def check_compat(
-    code: str,
     response: Response,
+    code: str = Body(),
     caps: Capabilities = Depends(get_caps, scope="function"),
 ) -> dict[str, int | list[str]]:
     ok, reasons = caps.check_code(code)
