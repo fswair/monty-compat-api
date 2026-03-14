@@ -1,5 +1,5 @@
 cachetools
 fastapi
-monty-compat<=0.3.0
+monty-compat>=0.4.1
 asgi-request-duration
 python-multipart
