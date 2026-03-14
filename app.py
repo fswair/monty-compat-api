@@ -3,6 +3,7 @@ from typing import Any
 
 from monty_compat import get_capabilities, MontyCapabilities as Capabilities
 from fastapi import Depends, FastAPI, Response
+from fastapi.responses import PlainTextResponse
 from asgi_request_duration.middleware import RequestDurationMiddleware, TimeGranularity
 
 from pydantic import BaseModel
@@ -50,11 +51,11 @@ async def fetch_nodes() -> dict[str, Any]:
     return get_caps_as_dict()
 
 @app.get("/prompt")
-async def generation_prompt() -> str:
+async def generation_prompt():
     """
     Fetch detailed generation prompt that expands what Monty interpreter supports.
     """
-    return get_caps().to_prompt_context()
+    return PlainTextResponse(get_caps().to_prompt_context(), media_type="text/markdown")
 
 @app.post("/check")
 async def check_compat(
