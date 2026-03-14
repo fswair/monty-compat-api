@@ -50,11 +50,11 @@ async def fetch_nodes() -> dict[str, Any]:
     return get_caps_as_dict()
 
 @app.get("/prompt")
-async def generation_prompt() -> dict[str, str]:
+async def generation_prompt() -> str:
     """
     Fetch detailed generation prompt that expands what Monty interpreter supports.
     """
-    return dict(prompt=get_caps().to_prompt_context())
+    return get_caps().to_prompt_context()
 
 @app.post("/check")
 async def check_compat(
