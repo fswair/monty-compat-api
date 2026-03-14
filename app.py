@@ -37,6 +37,7 @@ async def home():
         "endpoints": {
             "docs": "Swagger UI API Docs",
             "nodes": "Implemented nodes by Monty.",
+            "prompt": "Build generation prompt for monty-compatible codegen.",
             "check": "Check any code to see whether code is monty compatible.",
         },
         "cache_ttl": 12 * 60 * 60,
